@@ -32,10 +32,10 @@
 
 @layer utilities {
   .btn-red {
-    @apply bg-rose-900 hover: bg-rose-800;
+    @apply bg-rose-900 hover:bg-rose-800;
   }
 
   .btn-green {
-    @apply bg-green-660 hover: bg-rgreen-800;
+    @apply bg-green-660 hover:bg-rgreen-800;
   }
 }
