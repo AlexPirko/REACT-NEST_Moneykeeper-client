@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Transactions from '../pages/Transactions';
-import Categories from '../pages/Categories';
+import Categories, { categoriesAction } from '../pages/Categories';
 import Layout from '../pages/Layout';
 import ErrorPage from '../pages/ErrorPage';
 import Home from '../pages/Home';
@@ -29,6 +29,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: 'categories',
+                        action: categoriesAction,
                         element: (
                             <ProtectedRoute>
                                 <Categories />
