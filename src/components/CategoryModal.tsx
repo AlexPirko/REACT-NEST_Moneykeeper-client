@@ -7,13 +7,14 @@ interface Props {
     setVisibleModal: (visible: boolean) => void;
 }
 
-const CategoryModal: FC<Props> = ({ type, setVisibleModal }) => {
+const CategoryModal: FC<Props> = ({ type, id, setVisibleModal }) => {
     return (
         <div className='fixed top-0 left-0 bottom-0 right-0 w-full h-full bg-black/50 flex justify-center items-center'>
             <Form action='/categories' method={type} className='grid gap-2 w-[300px] bg-slate-900 p-5 rounded-md'>
                 <label htmlFor='title'>
                     <small>Category title</small>
                     <input className='input w-full mt-1' type='text' name='title' placeholder='Title...' />
+                    <input type='hidden' name='id' value={id} />
                 </label>
 
                 <div className='flex items-center gap-2'>
