@@ -1,11 +1,35 @@
 import { FC, useState } from 'react';
 import { AuthService } from '../service/auth.service';
 import { toast } from 'react-toastify';
+import { setTokenToLocalStorage } from '../helpers/localstorage.helper';
+import { useAppDispatch } from '../store/hooks';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../store/user/userSlice';
 
 const Auth: FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [isLogin, setIsLogin] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault();
+            const data = await AuthService.login({ email, password });
+            
+            if (data) {
+                setTokenToLocalStorage('token', data.token);
+                dispatch(login(data));
+                toast.success('You logged in');
+                navigate('/');
+            }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            const error = err.response?.data.message;
+            toast.error(error.toString());
+        }
+    };
 
     const registrationHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
@@ -15,21 +39,6 @@ const Auth: FC = () => {
                 toast.success('Account has been created');
                 setIsLogin(!isLogin);
             }
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-            const error = err.response?.data.message;
-            toast.error(error.toString());
-        }
-    };
-
-    const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-        try {
-            e.preventDefault();
-            // const data = await AuthService.registration({ email, password });
-            // if (data) {
-            //     toast.success('Account has been created');
-            //     setIsLogin(!isLogin);
-            // }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             const error = err.response?.data.message;
