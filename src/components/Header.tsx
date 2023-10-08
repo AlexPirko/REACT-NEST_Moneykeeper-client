@@ -37,7 +37,7 @@ const Header: FC = () => {
                             <NavLink
                                 to={'/transactions'}
                                 className={({ isActive }) => (isActive ? 'text-white' : 'text-white/70')}>
-                                Transaction
+                                Transactions
                             </NavLink>
                         </li>
                         <li>
