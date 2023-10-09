@@ -2,9 +2,12 @@
 import { FC } from 'react';
 import TransactionsForm from '../components/TransactionsForm';
 import { instance } from '../api/axios.api';
-import { ICategory } from '../types/types';
+import { ICategory, IResponseTransLoader, ITransaction } from '../types/types';
 import { toast } from 'react-toastify';
 import TransactionTable from '../components/TransactionTable';
+import { useLoaderData } from 'react-router-dom';
+import { formatToUSD } from '../helpers/currency-fomat';
+import Chart from '../components/Chart';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const transactionsAction = async ({ request }: any) => {
@@ -23,21 +26,33 @@ export const transactionsAction = async ({ request }: any) => {
             return null;
         }
         case 'DELETE': {
+            const formData = await request.formData();
+            const transactionId = formData.get('id');
+            await instance.delete(`/transactions/transaction/${transactionId}`);
+            toast.success('Transaction deleted');
+            return null;
         }
     }
 };
 
 export const transactionsLoader = async () => {
     const categories = await instance.get<ICategory[]>('/categories');
-    const transactions = await instance.get('/transactions');
+    const transactions = await instance.get<ITransaction[]>('/transactions');
+    const totalIncome = await instance.get<number>('transactions/income/find');
+    const totalExpense = await instance.get<number>('transactions/expense/find');
+
     const data = {
         categories: categories.data,
         transactions: transactions.data,
+        totalIncome: totalIncome.data,
+        totalExpense: totalExpense.data,
     };
     return data;
 };
 
 const Transactions: FC = () => {
+    const { totalIncome, totalExpense } = useLoaderData() as IResponseTransLoader;
+
     return (
         <>
             <div className='grid grid-cols-3 gap-4 mt-4 items-start'>
@@ -48,19 +63,25 @@ const Transactions: FC = () => {
                     <div className='grid grid-cols-2 gap-3'>
                         <div>
                             <p className='uppercase text-md font-bold text-center'>Total Income:</p>
-                            <p className='mt-2 rounded-sm bg-green-600 p-1 text-center'>$1000</p>
+                            <p className='mt-2 rounded-sm bg-green-600 p-1 text-center'>
+                                {formatToUSD.format(totalIncome)}
+                            </p>
                         </div>
                         <div>
                             <p className='uppercase text-md font-bold text-center'>Total Expense:</p>
-                            <p className='mt-2 rounded-sm bg-red-500 p-1 text-center'>$100</p>
+                            <p className='mt-2 rounded-sm bg-red-500 p-1 text-center'>
+                                {formatToUSD.format(totalExpense)}
+                            </p>
                         </div>
                     </div>
-                    <>Chart</>
+                    <>
+                        <Chart totalIncome={totalIncome} totalExpense={totalExpense} />
+                    </>
                 </div>
             </div>
 
             <h1 className='my-5'>
-                <TransactionTable />
+                <TransactionTable limit={5} />
             </h1>
         </>
     );
