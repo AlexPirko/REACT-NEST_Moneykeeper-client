@@ -1,27 +1,56 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# REACT-NestJS Moneykeeper App
 
-Currently, two official plugins are available:
+## Deploy
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Run server: https://moneykp-server.onrender.com
+Run client: https://pirko-moneykeeper.netlify.app
 
-## Expanding the ESLint configuration
+## Description
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+It's a simply budget app for browser and focused on frontend and backend conection.
 
-- Configure the top-level `parserOptions` property like this:
+### Technology Stack🚀:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+-   React
+-   Redux
+-   Type Script
+-   Tailwind
+-   Vite
+-   Eslint
+-   Prettier
+
+## **Installation**
+
+1. Install [Node.js](https://nodejs.org/ru) version 16 or higher
+2. Clone this [repo](https://github.com/AlexPirko/REACT-NEST_Moneykeeper-client) to your computer
+3. REACT-NestJS Moneykeeper App
+4. Install all dependencies using [npm install](https://docs.npmjs.com/cli/v9/commands/npm-install)
+5. Run `npm run dev` in command line and get the best experience in your life😉
+
+## Pre-configured Scripts
+
+### **Start develompent mode**
+
+```
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+&nbsp; &nbsp; &nbsp; \*_use this script to run application in development mode_
+
+### **Build app**
+
+```
+ npm run build
+```
+
+&nbsp; &nbsp; &nbsp; \*_use this script to create application build_
+
+### **Check with lint**
+
+```
+ npm run lint
+```
+
+&nbsp; &nbsp; &nbsp; \* _use this script to check code with eslint_
